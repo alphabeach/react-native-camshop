@@ -8,7 +8,7 @@ import { Category } from "../models/category.js";
 // In your getAllProducts controller function 
 export const getAllProducts = async (req, res) => {
   try {
-    const { keyword, category } = req.query;
+    const { keyword, category, minPrice, maxPrice } = req.query;
     
     // Create a base query object
     const query = {
@@ -23,13 +23,15 @@ export const getAllProducts = async (req, res) => {
       query.category = category;
     }
     
-    // Execute the query
-    let products;
-    if (category && category.trim() !== "") {
-        products = await Product.find(query).populate("category");
-    } else {
-        products = await Product.find({}).populate("category");
+    // Add price range filter
+    if (minPrice || maxPrice) {
+      query.price = {};
+      if (minPrice) query.price.$gte = Number(minPrice);
+      if (maxPrice) query.price.$lte = Number(maxPrice);
     }
+    
+    // Execute the query
+    const products = await Product.find(query).populate("category");
     
     res.status(200).json({
       success: true,

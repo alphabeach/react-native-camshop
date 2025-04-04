@@ -1,7 +1,7 @@
 import axios from "axios";
 import { server } from "../store";
 
-export const getAllProducts = (keyword = "", category = "") => async (dispatch) => {
+export const getAllProducts = (keyword = "", category = "", minPrice = 0, maxPrice = 100000) => async (dispatch) => {
   try {
     dispatch({ type: "getAllProductsRequest" });
     
@@ -11,6 +11,8 @@ export const getAllProducts = (keyword = "", category = "") => async (dispatch) 
     
     if (keyword) params.append("keyword", keyword);
     if (category) params.append("category", category);
+    if (minPrice > 0) params.append("minPrice", minPrice);
+    if (maxPrice < 100000) params.append("maxPrice", maxPrice);
     
     // Only append query string if we have parameters
     if (params.toString()) {
