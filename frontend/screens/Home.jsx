@@ -111,35 +111,52 @@ const Home = () => {
             height: 80,
           }}
         >
-          <ScrollView
-            horizontal
-            contentContainerStyle={{
-              alignItems: "center",
-            }}
-            showsHorizontalScrollIndicator={false}
-          >
-            {categories.map((item, index) => (
-              <Button
-                key={item._id}
-                style={{
-                  backgroundColor:
-                    category === item._id ? colors.color1 : colors.color5,
-                  borderRadius: 100,
-                  margin: 5,
-                }}
-                onPress={() => categoryButtonHandler(item._id)}
-              >
-                <Text
-                  style={{
-                    fontSize: 12,
-                    color: category === item._id ? colors.color2 : "gray",
-                  }}
-                >
-                  {item.category}
-                </Text>
-              </Button>
-            ))}
-          </ScrollView>
+<ScrollView
+  horizontal
+  contentContainerStyle={{
+    alignItems: "center",
+  }}
+  showsHorizontalScrollIndicator={false}
+>
+  <Button
+    style={{
+      backgroundColor: category === "" ? colors.color1 : colors.color5,
+      borderRadius: 100,
+      margin: 5,
+    }}
+    onPress={() => setCategory("")}
+  >
+    <Text
+      style={{
+        fontSize: 12,
+        color: category === "" ? colors.color2 : "gray",
+      }}
+    >
+      All Products
+    </Text>
+  </Button>
+  
+  {categories.map((item, index) => (
+    <Button
+      key={item._id}
+      style={{
+        backgroundColor: category === item._id ? colors.color1 : colors.color5,
+        borderRadius: 100,
+        margin: 5,
+      }}
+      onPress={() => categoryButtonHandler(item._id)}
+    >
+      <Text
+        style={{
+          fontSize: 12,
+          color: category === item._id ? colors.color2 : "gray",
+        }}
+      >
+        {item.category}
+      </Text>
+    </Button>
+  ))}
+</ScrollView>
         </View>
 
         {/* Products */}

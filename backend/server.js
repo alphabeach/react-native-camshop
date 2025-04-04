@@ -8,9 +8,9 @@ connectDB();
 export const stripe = new Stripe(process.env.STRIPE_API_SECRET);
 
 cloudinary.v2.config({
-  CLOUDINARY_CLOUD_NAME: process.env.CLOUDINARY_NAME,
-  CLOUDINARY_API_KEY: process.env.CLOUDINARY_API_KEY,
-  CLOUDINARY_API_SECRET: process.env.CLOUDINARY_API_SECRET,
+  cloud_name: process.env.CLOUDINARY_NAME,  
+  api_key: process.env.CLOUDINARY_API_KEY,
+  api_secret: process.env.CLOUDINARY_API_SECRET,
 });
 
 app.listen(process.env.PORT, () => {

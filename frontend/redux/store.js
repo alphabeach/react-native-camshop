@@ -39,4 +39,4 @@ export const store = configureStore({
   },
 });
 
-export const server = "http://172.34.21.139:4000/api/v1";
+export const server = "http://192.168.225.189:4000/api/v1";

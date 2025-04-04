@@ -5,22 +5,43 @@ import { getDataUri } from "../utils/features.js";
 import cloudinary from "cloudinary";
 import { Category } from "../models/category.js";
 
-export const getAllProducts = asyncError(async (req, res, next) => {
-  const { keyword, category } = req.query;
-
-  const products = await Product.find({
-    name: {
-      $regex: keyword ? keyword : "",
-      $options: "i",
-    },
-    category: category ? category : undefined,
-  });
-
-  res.status(200).json({
-    success: true,
-    products,
-  });
-});
+// In your getAllProducts controller function 
+export const getAllProducts = async (req, res) => {
+  try {
+    const { keyword, category } = req.query;
+    
+    // Create a base query object
+    const query = {
+      name: {
+        $regex: keyword ? keyword : "",
+        $options: "i",
+      }
+    };
+    
+    // Only add category filter if category is provided and not empty
+    if (category && category !== "undefined" && category.trim() !== "") {
+      query.category = category;
+    }
+    
+    // Execute the query
+    let products;
+    if (category && category.trim() !== "") {
+        products = await Product.find(query).populate("category");
+    } else {
+        products = await Product.find({}).populate("category");
+    }
+    
+    res.status(200).json({
+      success: true,
+      products,
+    });
+  } catch (error) {
+    res.status(500).json({
+      success: false,
+      message: error.message,
+    });
+  }
+};
 export const getAdminProducts = asyncError(async (req, res, next) => {
   const products = await Product.find({}).populate("category");
 

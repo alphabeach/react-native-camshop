@@ -1,13 +1,13 @@
 {
   "expo": {
-    "name": "6-pack-ecom",
-    "slug": "6-pack-ecom",
+    "name": "ClickIT",
+    "slug": "ClickIT",
     "version": "1.0.0",
     "orientation": "portrait",
-    "icon": "./assets/icon.png",
+    "icon": "./assets/project-preview-large-2.png",
     "userInterfaceStyle": "light",
     "splash": {
-      "image": "./assets/splash.png",
+      "image": "./assets/project-preview-large-2.png",
       "resizeMode": "contain",
       "backgroundColor": "#ffffff"
     },

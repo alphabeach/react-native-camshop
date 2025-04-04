@@ -1,22 +1,29 @@
 import axios from "axios";
 import { server } from "../store";
 
-export const getAllProducts = (keyword, category) => async (dispatch) => {
+export const getAllProducts = (keyword = "", category = "") => async (dispatch) => {
   try {
-    dispatch({
-      type: "getAllProductsRequest",
-    });
-    const { data } = await axios.get(
-      `${server}/product/all?keyword=${keyword}&category=${category}`,
-      {
-        withCredentials: true,
-      }
-    );
-
+    dispatch({ type: "getAllProductsRequest" });
+    
+    // Build URL with proper query parameters
+    let url = `${server}/product/all`;
+    const params = new URLSearchParams();
+    
+    if (keyword) params.append("keyword", keyword);
+    if (category) params.append("category", category);
+    
+    // Only append query string if we have parameters
+    if (params.toString()) {
+      url += `?${params.toString()}`;
+    }
+    
+    const { data } = await axios.get(url, { withCredentials: true });
+    
     dispatch({
       type: "getAllProductsSuccess",
       payload: data.products,
     });
+    
   } catch (error) {
     dispatch({
       type: "getAllProductsFail",
